@@ -1,7 +1,6 @@
 #+Author: Prof. Miguel Angel Escalante Serrato
 #+title: Bases de Datos No Relacionales
 #+email: miguel.escalante@itam.mx
-#+bibliography: references.bib
 
 * Introducción
 Este es el repositorio con el contenido del curso Bases de Datos No Relacionales  de la Licenciatura en Ciencia de Datos del ITAM impartido por el Prof. Miguel Escalante.
