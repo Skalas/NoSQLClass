@@ -1,4 +1,6 @@
-#+title: Docker
+#+Author: Prof. Miguel Angel Escalante Serrato
+#+title:Docker intro
+#+email: miguel.escalante@itam.mx
 
 ** ¿Qué es docker?
 
@@ -19,12 +21,12 @@ Una *imagen* es una especie de cascarón o plantilla no modificable.
 #+end_quote
 
 
-Un **contenedor** es creado a partir de una *imagen*. Los contenedores es aquello con lo que vas a interactuar. Pueden ser ejecutados, iniciados, detenidos, movidos, borrados, etc. Cada contenedor es un ambiente aislado. Aunque pueden ser conectados entre sí.
+Un *contenedor* es creado a partir de una *imagen*. Los contenedores es aquello con lo que vas a interactuar. Pueden ser ejecutados, iniciados, detenidos, movidos, borrados, etc. Cada contenedor es un ambiente aislado. Aunque pueden ser conectados entre sí.
 
 ** Ejercicio
 
 #+begin_quote
- *NOTA:g*  Si están en ~ubuntu~ y no configuraron su usuario como miembros del grupo ~docker~ agreguen ~sudo~ al principio de cada comando
+ *NOTA:*  Si están en ~ubuntu~ y no configuraron su usuario como miembros del grupo ~docker~ agreguen ~sudo~ al principio de cada comando
      #+end_quote
 
 
@@ -33,7 +35,7 @@ Un **contenedor** es creado a partir de una *imagen*. Los contenedores es aquell
     - Verifiquen que el *daemon* esté corriendo con ~docker run hello-world~
     - Descarguen una *imagen* de ~ubuntu~
 
-    ,#+begin_src shell
+    #+begin_src shell
       docker pull mongo:latest
 #+end_src
 
