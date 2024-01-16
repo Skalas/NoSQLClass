@@ -1,0 +1,76 @@
+#+title: Docker
+
+** ¿Qué es docker?
+
+Es una plataforma de virtualización además de un conjunto de comandos para establecer *workflows* de trabajo que permitan crear, instalar, compartir etc, aplicaciones.
+
+*Docker* está compuesto de dos partes un *daemon* o un servidor y un *cliente*, el comando ~docker~.
+
+** Instalación
+- [[https://docs.docker.com/desktop/][Docker Desktop]]
+
+** Imágen y contenedores
+
+Una *imagen* es una especie de cascarón o plantilla no modificable.
+
+#+begin_quote
+  *Ejemplo*
+  Ejemplos de imágenes son ~ubuntu~ y la imagen de la clase con la que trabajaremos (~ec2022~).
+#+end_quote
+
+
+Un **contenedor** es creado a partir de una *imagen*. Los contenedores es aquello con lo que vas a interactuar. Pueden ser ejecutados, iniciados, detenidos, movidos, borrados, etc. Cada contenedor es un ambiente aislado. Aunque pueden ser conectados entre sí.
+
+** Ejercicio
+
+#+begin_quote
+ *NOTA:g*  Si están en ~ubuntu~ y no configuraron su usuario como miembros del grupo ~docker~ agreguen ~sudo~ al principio de cada comando
+     #+end_quote
+
+
+    - En su computadora, abran una terminal
+    - Verifiquen que el cliente ~docker~ esté instalado tecleando ~docker~
+    - Verifiquen que el *daemon* esté corriendo con ~docker run hello-world~
+    - Descarguen una *imagen* de ~ubuntu~
+
+    ,#+begin_src shell
+      docker pull mongo:latest
+#+end_src
+
+- Verifiquen que la imagen esté en su computadora
+
+#+begin_src shell
+  docker images
+#+end_src
+
+- Para crear un contenedor interactivo:
+
+#+begin_src shell
+  docker run -it mongo /bin/bash
+#+end_src
+
+(Aquí podemos hacer lo que se pide en las siguientes secciones de esta *clase*)
+
+
+Para salir de este contendor tecleen ~exit~.
+
+- Para verificar que el contenedor está ahí:
+
+#+begin_src shell
+  docker ps -a
+#+end_src
+
+
+** ¿Y la próxima vez?
+
+- La siguiente vez que quieras ejecutar ~docker~ usa el siguiente comando:
+#+begin_src shell
+  docker start -a -i priceless_carson
+#+end_src
+
+donde debes de cambiar ~priceless_carson~ por el nombre del contenedor (la última columna de ~docker ps -a~).
+
+
+** Liga de ayuda
+
+Pueden ver [[https://github.com/wsargent/docker-cheat-sheet][esto]] si tienen dudas, tambien [[https://skalas.me/juay-the-docker][mi entrada de blog]] es una intro sencilla a lo mismo.
