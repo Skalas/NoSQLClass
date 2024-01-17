@@ -17,18 +17,13 @@ Una *imagen* es una especie de cascarón o plantilla no modificable.
 
 #+begin_quote
   *Ejemplo*
-  Ejemplos de imágenes son ~ubuntu~ y la imagen de la clase con la que trabajaremos (~ec2022~).
+  Ejemplos de imágenes son ~mongo~, ~ubuntu~, ~neo4j~ y ~cassandra~.
 #+end_quote
 
 
 Un *contenedor* es creado a partir de una *imagen*. Los contenedores es aquello con lo que vas a interactuar. Pueden ser ejecutados, iniciados, detenidos, movidos, borrados, etc. Cada contenedor es un ambiente aislado. Aunque pueden ser conectados entre sí.
 
 ** Ejercicio
-
-#+begin_quote
- *NOTA:*  Si están en ~ubuntu~ y no configuraron su usuario como miembros del grupo ~docker~ agreguen ~sudo~ al principio de cada comando
-     #+end_quote
-
 
     - En su computadora, abran una terminal
     - Verifiquen que el cliente ~docker~ esté instalado tecleando ~docker~
