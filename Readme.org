@@ -145,4 +145,4 @@ Primer tarea!!
 
 * Usuarios Github
 
-Por favor [[https://forms.gle/6TsZS1xW1CnsUR6s7][entren aquí]] para llenar sus usuarios de github, además de darse de alta en el [[https://classroom.github.com/classrooms/111149095-nosqlp24][Classroom]] de Github.
+Por favor [[https://forms.gle/6TsZS1xW1CnsUR6s7][entren aquí]] para llenar sus usuarios de github.
