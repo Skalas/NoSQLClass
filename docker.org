@@ -62,10 +62,10 @@ Para salir de este contendor tecleen ~exit~.
 
 - La siguiente vez que quieras ejecutar ~docker~ usa el siguiente comando:
 #+begin_src shell
-  docker start -a -i priceless_carson
+  docker start -ai angry_moser
 #+end_src
 
-donde debes de cambiar ~priceless_carson~ por el nombre del contenedor (la última columna de ~docker ps -a~).
+donde debes de cambiar ~angry_moser~ por el nombre del contenedor (la última columna de ~docker ps -a~).
 
 
 ** Liga de ayuda
