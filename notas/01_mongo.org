@@ -51,7 +51,8 @@ Vamos ahora a agregar un documento:
      mayor: {
         name: "Bill de Blasio",
         party: "D"
-     }
+     },
+    country: "USA"
   })
 #+end_src
 
@@ -85,9 +86,8 @@ Un error como estos:
 
 #+begin_src js
   db.towns.insertOne({
-      _id: 1,
      name: "New York",
-     population: 22200000,
+     population: "22200000",
      lastCensus: ISODate("2016-07-01"),
      famousFor: ["the MOMA", "food", "The Met"],
      mayor: {
@@ -100,6 +100,19 @@ Un error como estos:
 
 3. Al cerrar llaves y paréntesis, debemos tener esta salida:
 
+#+begin_src js
+  db.towns.insertOne({
+     _id: ObjectId(1),
+     name: "New York",
+     population: "22200000",
+     lastCensus: ISODate("2016-07-01"),
+     famousFor: ["the MOMA", "food", "The Met"],
+     mayor: {
+        name: "Bill de Blasio",
+        party: "D"
+     }
+  })
+#+end_src
 
 Qué pasa si volvemos a ejecutar la misma inserción❓
 
@@ -229,7 +242,11 @@ Para ensayar las funciones de consulta, debemos importar algunas BDs de prueba.
 *** Vamos a utilizar el comando import de esa localidad para insertar uno de los JSONs del repo que descargamos:
 
 #+begin_src sh
-  docker exec mongo mongoimport --db trainingsessions --drop --file ./mongodb-sample-dataset/sample_training/tweets.json
+  docker exec \
+   mongo \
+   mongoimport --db trainingsessions \
+   --drop \
+   --file ./mongodb-sample-dataset/sample_training/tweets.json
   docker exec -it mongo bash
 #+end_src
 
@@ -255,7 +272,7 @@ Para ensayar las funciones de consulta, debemos importar algunas BDs de prueba.
 #+end_src
 
 #+begin_src shell
-  cat mongodb-sample-dataset/sample_training/tweets.json | \
+  cat ./mongodb-sample-dataset/sample_training/tweets.json | \
       docker exec -i \
              mongo \
              mongoimport \
@@ -487,19 +504,21 @@ Recordemos  que los arrays en MongoDB *están indexados desde 0 y no desde 1*.
 Para buscar un documento por el tamaño de uno de sus atributos de tipo array:
 
 #+begin_src js
-db.tweets.find({"retweeted":{$size:7}})
+db.tweets.find({"entities.hashtags":{$size:7}}, {"entities.hashtags":1})
 #+end_src
+
+#+RESULTS:
 
 Y para buscar documentos cuyos atributos tipo array tengan más de 7 elementos:
 
 #+begin_src js
-db.tweets.find({"entities.hashtags.7":{$exists:true}})
+db.tweets.find({"entities.hashtags.6":{$exists:true}}, {"entities.hashtags":1})
 #+end_src
 
 Podemos combinar operadores ~$exists~, ~$gte~ y ~$lte~ para buscar documentos que tengan un array entre N y M elementos. El siguiente query regresa los tuits que tengan *EXACTAMENTE* un hashtag, aprovechando la _dot notation (.)_ para viajar de ~entities->hashtags->[elemento del array con índice 0]~ y verificar su existencia con ~{$exists:true}~, y hacer el mismo viaje al ~[elemento del array con índice 1]~ y asegurarnos que no existe con ~{$exists:false}~.
 
 #+begin_src js
-db.tweets.find({"entities.hashtags.1":{$exists:false},"entities.hashtags.0":{$exists:true}},{"entities":1})
+db.tweets.find({"entities.hashtags.1":{$exists:false},"entities.hashtags.0":{$exists:true}},{"entities.hashtags":1})
 #+end_src
 
 El racional de esta forma de ~find()~ es que si buscamos arrays con num de elementos mayores a 7, entonces tendremos arrays cuyo elemento en la posición 7 (que realmente es la posición 8 porque *comenzamos desde 0*) debe tener un elemento presente.
