@@ -294,8 +294,8 @@ Ahora si vamos a leer estos datos. Para leer datos en MongoDB la función base e
 
 - ~db.tweets.find()~ trae todos los _documentos_ de la _colección_ ~tweets~.
 - ~db.tweets.find({ "_id" : ObjectId("5c8eccb0caa187d17ca624d4") })~ va a traer el documento con ID ~5c8eccb0caa187d17ca624d4~. Recordemos que los ID son autogenerados y el atributo ~_id~ es creado automáticamente
-- ~db.tweets.find( {"_id" : ObjectId("5c8eccb0caa187d17ca624d4")}, {"source": 1} )~ va a traer el documento con ID ~611ce2e73afe7ee944574e51~ pero solo su atributo ~population~ similar a un ~select population from towns where id = 611ce2e73afe7ee944574e51~
-- ~db.towns.find( {"_id" : ObjectId("611ce2e73afe7ee944574e51")}, {population : 0} )~ va a traer el mismo documento, pero ahora con todos sus atributos *EXCEPTO* ~population~
+- ~db.tweets.find( {"_id" : ObjectId("5c8eccb0caa187d17ca624d4")}, {"source": 1} )~ va a traer el documento con ID ~5c8eccb0caa187d17ca624d4~ pero solo su atributo ~population~ similar a un ~select population from towns where id = 5c8eccb0caa187d17ca624d4~
+- ~db.towns.find( {"_id" : ObjectId("5c8eccb0caa187d17ca624d4")}, {population : 0} )~ va a traer el mismo documento, pero ahora con todos sus atributos *EXCEPTO* ~population~
 - ~db.towns.find( {population : 6200})~ va a traer el documento con ~population~ igual a _6200_
 - ~db.towns.find( {name : "London"})~ va a traer el documento con ~name~ igual a _"London"_
 
