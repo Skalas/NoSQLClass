@@ -31,11 +31,12 @@ Pícale [[https://discord.gg/jYYVzQUf][acá.]]
 * Temario
 
 - Velocidades en BDS
+- Setup desarrollo Alumnos
 - Base de datos con base en documentos (MongoDB)
 - Bases de datos columnares(Cassandra)
 - Bases de datos con base en Grafos (Neo4j)
 - Data Lake
-- Spark (si hay tiempo)
+
 
 
 * Evaluación
