@@ -596,7 +596,73 @@ Para los siguientes ejemplos vamos a insertar estos documentos con la función ~
 1. Creen una nueva BD llamada ~warehouse~
 2. Creen una colección llamada ~inventory~
 3. Inserten estos documentos de arriba
-
+#+begin_src js
+  use warehouse;
+  db.inventory.insertMany(
+  [
+     {
+        "item":"journal",
+        "instock":[
+           {
+              "warehouse":"A",
+              "qty":5
+           },
+           {
+              "warehouse":"C",
+              "qty":15
+           }
+        ]
+     },
+     {
+        "item":"notebook",
+        "instock":[
+           {
+              "warehouse":"C",
+              "qty":5
+           }
+        ]
+     },
+     {
+        "item":"paper",
+        "instock":[
+           {
+              "warehouse":"A",
+              "qty":60
+           },
+           {
+              "warehouse":"B",
+              "qty":15
+           }
+        ]
+     },
+     {
+        "item":"planner",
+        "instock":[
+           {
+              "warehouse":"A",
+              "qty":40
+           },
+           {
+              "warehouse":"B",
+              "qty":5
+           }
+        ]
+     },
+     {
+        "item":"postcard",
+        "instock":[
+           {
+              "warehouse":"B",
+              "qty":15
+           },
+           {
+              "warehouse":"C",
+              "qty":35
+           }
+        ]
+     }
+  ] );
+#+end_src
 El siguiente query va a regresar todos los artículos que estén en en warehouse A y de los que tengamos 5 en inventario:
 
 #+begin_src js
@@ -652,78 +718,79 @@ Hay estructuras de documentos de varios niveles y con arreglos anidados donde al
 3. Insertamos este array de documentos con ~insertMany~
 
 #+begin_src js
-db.articles.insertMany([
-{
-	"_id" : 1,
-	"description" : "DESCRIPTION ARTICLE AB",
-	"article_code" : "AB",
-	"purchase" : [
-		{
-			"company" : 1,
-			"cost" : NumberDecimal("80.010000")
-		},
-		{
-			"company" : 2,
-			"cost" : NumberDecimal("85.820000")
-		},
-		{
-			"company" : 3,
-			"cost" : NumberDecimal("79.910000")
-		}
-	],
-	"stock" : [
-	    {
-	        "country" : "01",
-	        "warehouse" : {
-	            "code" : "02",
-	            "units" : 10
-	        }
-	    },
-	    {
-	        "country" : "02",
-	        "warehouse" : {
-	            "code" : "02",
-	            "units" : 8
-	        }
-	    }
-	]
-},
-{
-	"_id" : 2,
-	"description" : "DESCRIPTION ARTICLE AC",
-	"article_code" : "AC",
-	"purchase" : [
-		{
-			"company" : 1,
-			"cost" : NumberDecimal("90.010000")
-		},
-		{
-			"company" : 2,
-			"cost" : NumberDecimal("95.820000")
-		},
-		{
-			"company" : 3,
-			"cost" : NumberDecimal("89.910000")
-		}
-	],
-	"stock" : [
-	    {
-	        "country" : "01",
-	        "warehouse" : {
-	            "code" : "01",
-	            "units" : 20
-	        }
-	    },
-	    {
-	        "country" : "02",
-	        "warehouse" : {
-	            "code" : "02",
-	            "units" : 28
-	        }
-	    }
-	]
-}
-]);
+  use store;
+  db.articles.insertMany([
+  {
+  	"_id" : 1,
+  	"description" : "DESCRIPTION ARTICLE AB",
+  	"article_code" : "AB",
+  	"purchase" : [
+  		{
+  			"company" : 1,
+  			"cost" : NumberDecimal("80.010000")
+  		},
+  		{
+  			"company" : 2,
+  			"cost" : NumberDecimal("85.820000")
+  		},
+  		{
+  			"company" : 3,
+  			"cost" : NumberDecimal("79.910000")
+  		}
+  	],
+  	"stock" : [
+  	    {
+  	        "country" : "01",
+  	        "warehouse" : {
+  	            "code" : "02",
+  	            "units" : 10
+  	        }
+  	    },
+  	    {
+  	        "country" : "02",
+  	        "warehouse" : {
+  	            "code" : "02",
+  	            "units" : 8
+  	        }
+  	    }
+  	]
+  },
+  {
+  	"_id" : 2,
+  	"description" : "DESCRIPTION ARTICLE AC",
+  	"article_code" : "AC",
+  	"purchase" : [
+  		{
+  			"company" : 1,
+  			"cost" : NumberDecimal("90.010000")
+  		},
+  		{
+  			"company" : 2,
+  			"cost" : NumberDecimal("95.820000")
+  		},
+  		{
+  			"company" : 3,
+  			"cost" : NumberDecimal("89.910000")
+  		}
+  	],
+  	"stock" : [
+  	    {
+  	        "country" : "01",
+  	        "warehouse" : {
+  	            "code" : "01",
+  	            "units" : 20
+  	        }
+  	    },
+  	    {
+  	        "country" : "02",
+  	        "warehouse" : {
+  	            "code" : "02",
+  	            "units" : 28
+  	        }
+  	    }
+  	]
+  }
+  ]);
 #+end_src
 
 Qué función ~find()~ necesitamos para obtener los "artículos" con ~stock~ en el ~warehouse~ 02 en el ~country~ 01?
@@ -765,7 +832,7 @@ db.articles.find({},{"purchase":{$slice:-2}})
 Del mismo modo, podemos usar el operador ~$slice~ para obtener un elemento en específico del array usando la forma ~find({},{atributo:{$slice:[indice_inicio, numero_de_elementos]}}~. El siguiente comando traerá solamente el 2o elemento de los arrays ~purchase~.
 
 #+begin_src js
-db.articles.find({},{purchase:{$slice:[1,3]}})
+db.articles.find({},{purchase:{$slice:[1,1]}})
 #+end_src
 
 Aquí nos posicionamos en el índice 1 (el 2o elemento), y a partir de ahí, traemos 1 elemento.
