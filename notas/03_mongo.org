@@ -379,8 +379,8 @@ Agregar un objeto completo a Arrays .
       { $unwind: '$students' },
       { $project: { _id: 0, "name": 1, 'students.year': 1, 'students.number': 1 } },
       { $match: {"students.year":{$gte:2015}}} ,
-      { $group: { _id: "$name", agnos: { $mergeObjects: "$students" } } } ,
-      { $project:{_id:0,"uni":"$_id",agnos:1}}
+      { $group: { _id: "$name", agnos: { $addToSet: "$students" } } } ,
+      { $project: {_id:0, "uni":"$_id", agnos:1}}
    ])
 #+end_src
 
@@ -392,7 +392,7 @@ O cualquiera de estas funciones:
 |---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | $addToSet     | Después de agrupar, agrega elementos individuales a un array                                                                                                                                                 |
 | $avg          | Promedio                                                                                                                                                                                                     |
-| $count        | Conteo (igual a ~{$sum:1}~                                                                                                                                                                                   |
+P| $count        | Conteo (igual a ~{$sum:1}~                                                                                                                                                                                   |
 | $first        | Regresa el 1er documento o diccionario de cada grupo. ⚠️No confundir con el operador ~$first~ aplicable a arrays. Este operador no se ocupa del orden, eso se garantiza desde el stage ~$sort~ del pipeline |
 | $last         | Regresa el último documento o diccionario de cada grupo. Mismas reglas y observaciones que ~$first~                                                                                                          |
 | $max          | Regresa el máximo de cada grupo                                                                                                                                                                              |
