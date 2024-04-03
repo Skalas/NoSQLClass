@@ -84,21 +84,25 @@ Un pipeline primero debe ser definido:
 
 #+begin_src js
   var pipeline = [
-      {"$match": {
-          "level": "Excellent",
-      }},
-
-      {"$sort": {
-          "name": -1,
-      }},
-
+      {
+  	"$match": {
+              "level": "Excellent",
+  	}
+      },
+      {
+  	"$sort": {
+              "name": -1,
+  	}
+      },
       {"$limit": 1},
-
-      {"$unset": [
-          "_id",
-          "name",
-          "level",
-      ]},
+      {
+  	"$unset":
+  	[
+              "_id",
+              "name",
+              "level",
+  	]
+      },
   ];
 #+end_src
 
