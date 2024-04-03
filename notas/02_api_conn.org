@@ -22,9 +22,9 @@ En conjunto estas operaciones las llamamos CRUD.
 
 En el 2000 a Roy Felding se le ocurrió que estos "verbos" se parecían un buen a los "verbos" del protocolo HTTP:
 
-1. CREATE
+1. POST
 2. GET
-3. POST
+3. PUT
 4. DELETE
 
 ** Ejercicio del resto de la clase:
