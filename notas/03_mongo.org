@@ -225,7 +225,7 @@ Toma la ejecución de toda la salida del pipeline y lo guarda en otra colección
       { $match:{country: 'Spain', city: 'Salamanca'} },
       { $project:{ country : 1, city : 1, name : 1} },
       { $group:{_id: "$name", conteo:{$sum:1}} },
-      { $project:{ _id : 0, "uni" : "$_id", conteo:1} },
+      { $project:{ _id : 1, "uni" : "$_id", conteo:1} },
       { $out:"miranomas" }
   ])
 #+end_src
@@ -303,6 +303,7 @@ Pero si corremos la siguiente agregación:
 #+end_src
 3. ~$unwind~ de un array de un diccionario que tiene un 2o o 3er array, solo va a "desenrollar" el diccionario que solicitamos en ese operador, por lo que los otros arrays estarán repetidos
 
+
 ** Para qué sirve esto?
 
 Para hacer cosas como contar las universidades con registros de alumnos de 2017:
@@ -312,10 +313,11 @@ Para hacer cosas como contar las universidades con registros de alumnos de 2017:
       { $project : { _id : 0, 'students.year' : 1, 'students.number' : 1 } },
       { $match: {'students.year':2017}},
       { $group:{_id: "$students.year", conteo:{$count: {}} }},
-  ])
+   ])
 #+end_src
 
 O  sumar los registros de alumnos de 2017:
+
 #+begin_src js
   db.universities.aggregate([
       { $unwind : '$students' },
@@ -346,8 +348,6 @@ O el promedio de alumnos de 2014 a 2017
       {$project:{_id:0,"uni":"$_id",promedioAlumnos:1}}
   ])
 #+end_src
-
-#+RESULTS:
 
 O el promedio de alumnos de 2015 a 2017
 
@@ -392,7 +392,7 @@ O cualquiera de estas funciones:
 |---------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | $addToSet     | Después de agrupar, agrega elementos individuales a un array                                                                                                                                                 |
 | $avg          | Promedio                                                                                                                                                                                                     |
-P| $count        | Conteo (igual a ~{$sum:1}~                                                                                                                                                                                   |
+| $count        | Conteo (igual a ~{$sum:1}~                                                                                                                                                                                   |
 | $first        | Regresa el 1er documento o diccionario de cada grupo. ⚠️No confundir con el operador ~$first~ aplicable a arrays. Este operador no se ocupa del orden, eso se garantiza desde el stage ~$sort~ del pipeline |
 | $last         | Regresa el último documento o diccionario de cada grupo. Mismas reglas y observaciones que ~$first~                                                                                                          |
 | $max          | Regresa el máximo de cada grupo                                                                                                                                                                              |
@@ -424,7 +424,10 @@ Vemos que solo hay 2 fechas. Si queremos agrupar por esa fecha y aglutinar los ~
        {_id: { day: { $dayOfYear: "$date"}, year: { $year: "$date" } }, itemsSold: { $addToSet: "$item" } }
       }
   ]);
+
 #+end_src
+
+#+RESULTS:
 
 👀OJO!👀 Estamos utilizando 2 operadores para objetos ~ISODate~:
 
@@ -460,6 +463,7 @@ Posterior a armar los grupos con esas 2 únicas fechas, cada ~item~ será agrega
 Crearemos la sig colección en cualquier BD:
 
 #+begin_src js
+  use sales;
   db.sales.insert( [
       { _id: 1, year: 2017, item: "A", quantity: { "2017Q1": 500, "2017Q2": 500 } },
       { _id: 2, year: 2016, item: "A", quantity: { "2016Q1": 400, "2016Q2": 300, "2016Q3": 0, "2016Q4": 0 } } ,
@@ -474,7 +478,7 @@ Vamos a agrupar por ~item~ y vamos a crear un diccionario con todos los ~quantit
   db.sales.aggregate( [
       { $group: { _id: "$item", mergedSales: { $mergeObjects: "$quantity" } } }
   ])
-    db.sales.aggregate( [
+  db.sales.aggregate( [
       { $group: { _id: {item:"$item", year:"$year"}, mergedSales: { $mergeObjects: "$quantity" } } }
   ])
 #+end_src
@@ -485,9 +489,8 @@ El sort y el limit puede usarse como stage de un pipeline de agregación, o pued
 
 * Stage ~$addFields~
 
-#+begin_src sh
-cat ../data/restaurants.json | docker exec -i mongo mongoimport --db=reviews --collection=restaurants
-
+#+begin_src bash
+  cat ../data/restaurants.json | docker exec -i mongo mongoimport --db=reviews --collection=restaurants
 #+end_src
 Crea campos nuevos basados en las agregaciones, como una suma concentrada final, o un promedio concentrado final.
 
@@ -500,9 +503,17 @@ La estructura de cada review es:
   use reviews
   db.restaurants.findOne()
 #+end_src
+
 Cómo podemos agregar un atributo a cada restaurante para tener su score total agregado de todos sus reviews y su promedio?
 
 #+begin_src js
+  db.restaurants.aggregate([
+      {$project:{"grades.score":1, "name":1}},
+      {$unwind:"$grades"},
+      {$group:{_id:"$name", "gradeArray":{$push:"$grades.score"}, "avgScore":{$avg:"$grades.score"}, "totalScore":{$sum:"$grades.score"}}},
+      {$project:{"name":"$_id",_id:0, "gradeArray":1, "avgScore":1, "totalScore":{$sum:"$gradeArray"}}}
+   ])
+// Dos maneras de hacer lo mismo con diferentes approaches
   db.restaurants.aggregate([
       {$project:{"grades.score":1, "name":1}},
       {$unwind:"$grades"},
