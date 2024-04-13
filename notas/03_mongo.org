@@ -565,7 +565,7 @@ Si ejecutamos la siguiente agregación:
   db.artwork.aggregate([
       { $unwind: "$tags" },
       { $sortByCount: "$tags" }
-  ] )
+  ])
 #+end_src
 
 Esto es, cuenta los elementos comunes y los ordena por el num de ocurrencias.
@@ -586,7 +586,7 @@ Para este ejercicio vamos a importar 2 colecciones a la BD ~lookup~:
   db.orders.insert([
       { "_id" : 1, "item" : "almonds", "price" : 12, "quantity" : 2 },
       { "_id" : 2, "item" : "pecans", "price" : 20, "quantity" : 1 },
-      { "_id" : 3  }
+      { "_id" : 3  },
   ])
 
   db.inventory.insert([

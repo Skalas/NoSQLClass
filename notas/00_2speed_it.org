@@ -1,0 +1,48 @@
+#+TITLE: Presentacion de Velocidades
+#+AUTHOR: Prof. Miguel Angel Escalante Serrato
+#+EMAIL:  miguel.escalante@itam.mx
+#+DATE: 12-apr-2024
+#+STARTUP: showall
+
+* Fuerzas de la era digital
+
+#+DOWNLOADED: screenshot @ 2024-04-12 18:25:21
+[[file:images/20240412-182521_screenshot.png]]
+
+* Stakeholders tecnológicos
+
+#+DOWNLOADED: screenshot @ 2024-04-12 18:26:11
+[[file:images/20240412-182611_screenshot.png]]
+
+* 2 speed IT
+
+#+DOWNLOADED: screenshot @ 2024-04-12 18:26:30
+[[file:images/20240412-182630_screenshot.png]]
+
+
+#+DOWNLOADED: screenshot @ 2024-04-12 18:26:40
+[[file:images/20240412-182640_screenshot.png]]
+
+
+#+DOWNLOADED: screenshot @ 2024-04-12 18:26:56
+[[file:images/20240412-182656_screenshot.png]]
+
+
+* Data Warehouse
+
+
+#+DOWNLOADED: screenshot @ 2024-04-13 14:31:48
+[[file:images/20240413-143148_screenshot.png]]
+
+
+#+DOWNLOADED: screenshot @ 2024-04-12 18:27:43
+[[file:images/20240412-182743_screenshot.png]]
+
+* Data Lake
+
+#+DOWNLOADED: screenshot @ 2024-04-13 14:32:18
+[[file:images/20240413-143218_screenshot.png]]
+
+
+#+DOWNLOADED: screenshot @ 2024-04-13 14:32:34
+[[file:images/20240413-143234_screenshot.png]]
