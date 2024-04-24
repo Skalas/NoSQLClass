@@ -1,5 +1,77 @@
 
 * Bases de Datos de Grafos - Neo4j
+** Instalando Neo4j en AWS EC2
+*** Abrir su cuenta de AWS.
+
+*** Instalar Neo4j
+
+Ejecutamos los siguientes comandos en la terminal:
+
+Primero garantizamos las llaves para el intercambio
+
+#+begin_src shell
+curl -fsSL https://debian.neo4j.com/neotechnology.gpg.key |sudo gpg --dearmor -o /usr/share/keyrings/neo4j.gpg
+#+end_src
+
+#+RESULTS:
+
+Luego agregamos los repositorios de neo4j a nuestro ubuntu
+
+#+begin_src shell
+  echo "deb [signed-by=/usr/share/keyrings/neo4j.gpg] https://debian.neo4j.com stable 4.1" | sudo tee -a /etc/apt/sources.list.d/neo4j.list
+#+end_src
+
+Actualizamos la lista de paquetes que ve el sistema
+
+#+begin_src shell
+sudo apt update
+#+end_src
+
+Finalmente, podemos instalar Neo4j:
+
+#+begin_src shell
+  sudo apt install -y neo4j
+#+end_src
+
+Si queremos que cuando reiniciemos la máquina, nuestro neo4j viva, hacemos esto:
+
+#+begin_src shell
+sudo systemctl enable neo4j.service
+#+end_src
+
+E iniciamos el servicio.
+#+begin_src shell
+sudo systemctl start neo4j.service
+#+end_src
+
+*** Conectándonos a Neo4j
+
+Antes de conectarnos debemos modificar el archivo ~/etc/neo4j/neo4j.conf~ para que Neo4j acepte conexiones de todo el mundo 🌐:
+
+#+begin_src shell
+  sudo nano /etc/neo4j/neo4j.conf
+#+end_src
+Hay que buscar la siguiente línea y descomentarla (quitarle el ~#~):
+
+#+begin_src shell
+#dbms.default_listen_address=0.0.0.0
+#+end_src
+
+Y reiniciar el server
+
+#+begin_src shell
+  sudo systemctl restart neo4j
+#+end_src
+
+Ahora si, conectémonos a Neo4j.
+
+Vamos a abrir un browser y entrar a ~http://[IP ADDRESS]:7474~. Nos va a pedir user y password. Los de default son ~neo4j~/~neo4j~, pero en cuanto los usemos, Neo4j nos va a pedir que los cambiemos.
+
+Lo que responde en el puerto ~7474~ es solamente un cliente ligero web hacia Neo4j, no el Neo4j como tal.
+
+Ese responde en el ~7687~, a través de un servidorsito de conexiones llamado ~Bolt~, con el URL ~jdbc:neo4j:bolt://[IP ADDRESS]:7687/~.
+
+** Introducción
 
 Mientras que para las BDs relacionales, cada registro es un ejemplo o instancia de una entidad, o una tabla, y las relaciones son solo llaves copiadas entre tablas, para las BDs de grafos lo que se almacena es la conexión o la relación entre 2 nodos.
 
@@ -109,77 +181,6 @@ Entonces hace todo el sentido del mundo que tengamos al frente de nuestra admini
 3. Visualización de actividad web o de APIs: MongoDB o BDs de documentos
 
 Pero necesitamos un "buffer" intermedio para no cargarle la mano a ese PostgreSQL. Ese buffer intermedio es el Data Lake que veremos al rato 😉.
-
-** Instalando Neo4j en AWS EC2
-*** Abrir su cuenta de AWS.
-
-*** Instalar Neo4j
-
-Ejecutamos los siguientes comandos en la terminal:
-
-Primero garantizamos las llaves para el intercambio
-
-#+begin_src shell
-curl -fsSL https://debian.neo4j.com/neotechnology.gpg.key |sudo gpg --dearmor -o /usr/share/keyrings/neo4j.gpg
-#+end_src
-
-#+RESULTS:
-
-Luego agregamos los repositorios de neo4j a nuestro ubuntu
-
-#+begin_src shell
-  echo "deb [signed-by=/usr/share/keyrings/neo4j.gpg] https://debian.neo4j.com stable 4.1" | sudo tee -a /etc/apt/sources.list.d/neo4j.list
-#+end_src
-
-Actualizamos la lista de paquetes que ve el sistema
-
-#+begin_src shell
-sudo apt update
-#+end_src
-
-Finalmente, podemos instalar Neo4j:
-
-#+begin_src shell
-  sudo apt install -y neo4j
-#+end_src
-
-Si queremos que cuando reiniciemos la máquina, nuestro neo4j viva, hacemos esto:
-
-#+begin_src shell
-sudo systemctl enable neo4j.service
-#+end_src
-
-E iniciamos el servicio.
-#+begin_src shell
-sudo systemctl start neo4j.service
-#+end_src
-
-*** Conectándonos a Neo4j
-
-Antes de conectarnos debemos modificar el archivo ~/etc/neo4j/neo4j.conf~ para que Neo4j acepte conexiones de todo el mundo 🌐:
-
-#+begin_src shell
-  sudo nano /etc/neo4j/neo4j.conf
-#+end_src
-Hay que buscar la siguiente línea y descomentarla (quitarle el ~#~):
-
-#+begin_src shell
-#dbms.default_listen_address=0.0.0.0
-#+end_src
-
-Y reiniciar el server
-
-#+begin_src shell
-  sudo systemctl restart neo4j
-#+end_src
-
-Ahora si, conectémonos a Neo4j.
-
-Vamos a abrir un browser y entrar a ~http://[IP ADDRESS]:7474~. Nos va a pedir user y password. Los de default son ~neo4j~/~neo4j~, pero en cuanto los usemos, Neo4j nos va a pedir que los cambiemos.
-
-Lo que responde en el puerto ~7474~ es solamente un cliente ligero web hacia Neo4j, no el Neo4j como tal.
-
-Ese responde en el ~7687~, a través de un servidorsito de conexiones llamado ~Bolt~, con el URL ~jdbc:neo4j:bolt://[IP ADDRESS]:7687/~.
 
 ** Cargando la versión de grafos de Northwind
 
