@@ -78,11 +78,12 @@
   docker stop neo4j
   docker rm neo4j
   docker run \
-	 --publish=7474:7474 --publish=7687:7687 \
-	 --volume=neo4j-data:/data \
-	 -d \
-	 --name neo4j \
-	 neo4j
+  	 --publish=7474:7474 --publish=7687:7687 \
+  	 --volume=neo4j-data:/data \
+  	 -d \
+  	 --name neo4j \
+  	 neo4j
+  docker run -it neo4j cypher-shell -a 35.173.125.50
 #+end_src
 
 ** Cliente Cypher
