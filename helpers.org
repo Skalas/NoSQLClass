@@ -1,6 +1,6 @@
-#+TITLE: Helpers to startup Databases
 #+AUTHOR: Prof. Miguel Angel Escalante Serrato
 #+EMAIL:  miguel.escalante@itam.mx
+#+TITLE: Helpers to startup Databases
 
 * Mongo
 ** Inicio de Mongo
@@ -83,14 +83,17 @@
   	 -d \
   	 --name neo4j \
   	 neo4j
-  docker run -it neo4j cypher-shell -a 35.173.125.50
 #+end_src
 
-** Cliente Cypher
+** Cliente Cypher - conexión local
 #+begin_src shell
 docker exec -it neo4j cypher-shell
 #+end_src
 
+** Cliente Cypher - conexión remota
+#+begin_src shell
+  docker run -it neo4j cypher-shell -a <IP>
+#+end_src
 ** Script de instalación
 #+begin_src shell
   curl -fsSL https://debian.neo4j.com/neotechnology.gpg.key |sudo gpg --dearmor -o /usr/share/keyrings/neo4j.gpg
