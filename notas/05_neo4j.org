@@ -227,12 +227,12 @@ Para cargarla vamos a utilizar el lenguaje *Cypher*, que es como el SQL para Neo
 **  Products
 
 #+begin_src cypher
-LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/Skalas/nosql2022/main/datasets/products.csv" AS row
-CREATE (n:Product)
-SET n = row,
-n.unitPrice = toFloat(row.unitPrice),
-n.unitsInStock = toInteger(row.unitsInStock), n.unitsOnOrder = toInteger(row.unitsOnOrder),
-n.reorderLevel = toInteger(row.reorderLevel), n.discontinued = (row.discontinued <> "0");
+    LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/Skalas/nosql2022/main/datasets/products.csv" AS row
+  CREATE (n:Product)
+  SET n = row,
+      n.unitPrice = toFloat(row.unitPrice),
+      n.unitsInStock = toInteger(row.unitsInStock), n.unitsOnOrder = toInteger(row.unitsOnOrder),
+      n.reorderLevel = toInteger(row.reorderLevel), n.discontinued = (row.discontinued <> "0");
 #+end_src
 
 Qué estamos haciendo aquí?
@@ -602,7 +602,7 @@ Es una BD grande, por lo que primero tenemos que hacer unas modificaciones a la 
 
 1. Cambiar el directorio de default para importar archivotes. Esto lo logramos comentando la línea ~dbms.directories.import=/var/lib/neo4j/import
 ~ del archivo ~/etc/neo4j/neo4j.conf~. Es un archivo de sistema, por lo que hay que editarlo con ~sudo nano /etc/neo4j/neo4j.conf~.
-
+x
 2. Igual editar el archivo ~/etc/security/limits.conf~ con ~sudo nano /etc/security/limits.conf~ y agregar hasta el final los siguientes 2 registros para poder abrir archivos grandes desde el filesystem de Ubuntu:
 
 #+begin_src bash
